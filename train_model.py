@@ -1,8 +1,8 @@
 import tensorflow as tf
-from tensorflow.keras import layers, models
-from tensorflow.keras.preprocessing import image_dataset_from_directory
-from tensorflow.keras.applications import MobileNetV2
-from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+from tensorflow.keras import layers, models # type: ignore
+from tensorflow.keras.preprocessing import image_dataset_from_directory # type: ignore
+from tensorflow.keras.applications import MobileNetV2 # type: ignore
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint # type: ignore
 import os
 
 # -----------------------------
@@ -14,7 +14,7 @@ os.makedirs(model_dir, exist_ok=True)
 image_size = (224, 224)
 batch_size = 32
 seed = 123
-epochs = 20
+epochs = 8
 
 # -----------------------------
 # 2️⃣ Load datasets

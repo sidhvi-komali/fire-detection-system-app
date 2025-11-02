@@ -14,7 +14,7 @@ model.summary()
 # -----------------------------
 # 2️⃣ Image variable (replace dynamically later)
 # -----------------------------
-image_path = "dataset/fire/227.jpg"  # replace with your image path
+image_path = "dataset/nofire/0.jpg"  # replace with your image path
 img_size = (224, 224)
 
 # -----------------------------
