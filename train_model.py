@@ -5,9 +5,7 @@ from tensorflow.keras.applications import MobileNetV2 # type: ignore
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint # type: ignore
 import os
 
-# -----------------------------
-# 1️⃣ Paths and parameters
-# -----------------------------
+    
 dataset_dir = "dataset"
 model_dir = "models"
 os.makedirs(model_dir, exist_ok=True)

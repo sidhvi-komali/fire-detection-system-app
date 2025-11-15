@@ -3,47 +3,41 @@ import cv2
 import numpy as np
 
 # -----------------------------
-# 1️⃣ Load model
+# Load model once at import time
 # -----------------------------
 model_path = "models/fire_detection_model.keras"
 model = tf.keras.models.load_model(model_path)
 print("✅ Model loaded successfully")
 
-model.summary()
+# Optional: print model summary
+# model.summary()
 
-# -----------------------------
-# 2️⃣ Image variable (replace dynamically later)
-# -----------------------------
-image_path = "dataset/nofire/0.jpg"  # replace with your image path
-img_size = (224, 224)
 
-# -----------------------------
-# 3️⃣ Preprocess image (must match training)
-# -----------------------------
-img = cv2.imread(image_path)
-if img is None:
-    raise ValueError(f"Image not found at path: {image_path}")
+def predict(image_path):
+    """
+    Takes an image path, preprocesses it, and returns the fire/no-fire prediction.
+    """
+    img_size = (224, 224)
 
-# Convert BGR to RGB
-img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    # Read image
+    img = cv2.imread(image_path)
+    if img is None:
+        raise ValueError(f"Image not found at path: {image_path}")
 
-# Resize to match model input
-img = cv2.resize(img, img_size)
+    # Convert BGR → RGB
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-# Normalize to [0,1]
-img = img / 255.0
+    # Resize
+    img = cv2.resize(img, img_size)
 
-# Add batch dimension
-img = np.expand_dims(img, axis=0)
+    # Normalize
+    img = img / 255.0
 
-# -----------------------------
-# 4️⃣ Predict
-# -----------------------------
-pred_prob = model.predict(img)[0][0]
-label = "fire" if pred_prob > 0.5 else "nofire"
+    # Add batch dimension
+    img = np.expand_dims(img, axis=0)
 
-# -----------------------------
-# 5️⃣ Debug prints
-# -----------------------------
-print(f"Prediction probability: {pred_prob:.4f}")
-print(f"Predicted label: {label}")
+    # Predict
+    pred_prob = model.predict(img)[0][0]
+    label = "❄️ NO FIRE" if pred_prob > 0.5 else "🔥 FIRE DETECTED"
+
+    return f"{label} (probability: {pred_prob:.4f})"
