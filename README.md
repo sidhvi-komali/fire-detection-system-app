@@ -3,7 +3,7 @@ Clevered Advanced Internship Project
 
 🧰 Installation
 1. Clone the project
-git clone https://github.com/yourusername/fire-detection-system-app.git
+git clone https://github.com/sidhvi-komali/fire-detection-system-app.git
 cd fire-detection-system-app
 
 2. Install dependencies
