@@ -14,19 +14,19 @@ certifi
 
 🛠️ Technologies Used
 
-*TensorFlow / Keras – Deep learning model
+- TensorFlow / Keras – Deep learning model
 
-*OpenCV – Image preprocessing
+- OpenCV – Image preprocessing
 
-*CustomTkinter – Modern GUI
+- CustomTkinter – Modern GUI
 
-*Pillow (PIL) – Image display
+- Pillow (PIL) – Image display
 
-*Numpy – Data manipulation
+- Numpy – Data manipulation
 
 🔍 How It Works
 
-*User uploads an image (.jpg, .jpeg, .png)
+User uploads an image (.jpg, .jpeg, .png)
 
 Image is:
 
