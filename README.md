@@ -1,6 +1,7 @@
 # fire-detection-system-app
 Clevered Advanced Internship Project
 
+
 📦 Requirements
 tensorflow
 tensorflow.keras
@@ -11,6 +12,7 @@ numpy
 Pillow
 customtkinter
 certifi
+
 
 🛠️ Technologies Used
 
@@ -46,7 +48,8 @@ App displays:
 
 “✅ No Fire Detected” (green)
 
-Confidence bar
+Confidence bar ----------
+
 
 🧰 Installation
 1. Clone the project
