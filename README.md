@@ -14,31 +14,31 @@ certifi
 
 🛠️ Technologies Used
 
-TensorFlow / Keras – Deep learning model
+*TensorFlow / Keras – Deep learning model
 
-OpenCV – Image preprocessing
+*OpenCV – Image preprocessing
 
-CustomTkinter – Modern GUI
+*CustomTkinter – Modern GUI
 
-Pillow (PIL) – Image display
+*Pillow (PIL) – Image display
 
-Numpy – Data manipulation
+*Numpy – Data manipulation
 
 🔍 How It Works
 
-User uploads an image (.jpg, .jpeg, .png)
+*User uploads an image (.jpg, .jpeg, .png)
 
 Image is:
 
-Loaded with OpenCV
+1. Loaded with OpenCV
 
-Converted BGR → RGB
+2. Converted BGR → RGB
 
-Resized to 224×224
+3. Resized to 224×224
 
-Normalized to [0,1]
+4. Normalized to [0,1]
 
-Model predicts a probability between 0 – 1
+5. Model predicts a probability between 0 – 1
 
 App displays:
 
