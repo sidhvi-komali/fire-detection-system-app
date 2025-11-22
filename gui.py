@@ -75,6 +75,19 @@ class FireDetectionApp(ctk.CTk):
 
         self._setup_ui()
         self._prepare_gradients()
+            
+    def restart_app(self):
+        """Soft restart: close this window and start a new one."""
+        try:
+            self._stop_animations()
+        except:
+            pass
+
+        self.destroy()
+
+        # Start a completely fresh instance
+        new_app = FireDetectionApp()
+        new_app.mainloop()
 
     def _setup_ui(self):
         self.grid_rowconfigure(0, weight=0)
@@ -100,8 +113,10 @@ class FireDetectionApp(ctk.CTk):
         self.upload_btn.grid(row=0, column=0, padx=(0, 8))
         self.sample_btn = ctk.CTkButton(btn_row, text="Load Sample", command=self._load_sample, width=120)
         self.sample_btn.grid(row=0, column=1, padx=(0, 8))
-        self.reset_btn = ctk.CTkButton(btn_row, text="Reset", command=self.reset, width=100, fg_color="#B0B0B0")
+        self.reset_btn = ctk.CTkButton(btn_row, text="Reset", command=self.reset, width=100, fg_color="#4F4F4F")
         self.reset_btn.grid(row=0, column=2)
+        self.restart_btn = ctk.CTkButton(btn_row, text="Restart App", command=self.restart_app, width=120, fg_color="#444444")
+        self.restart_btn.grid(row=0, column=3, padx=(8, 0))
 
         self.image_container = ctk.CTkFrame(self.left_frame, corner_radius=6)
         self.image_container.grid(row=0, column=0, sticky="nsew", padx=12, pady=(60, 12))
