@@ -128,7 +128,7 @@ class FireDetectionApp(ctk.CTk):
         self.conf_row = ctk.CTkFrame(self.right_frame, fg_color="transparent")
         self.conf_row.grid(row=2, column=0, pady=(2, 0))
 
-        self.conf_label = ctk.CTkLabel(self.conf_row, text="Fire Confidence:", font=("Helvetica", 14, "bold"))
+        self.conf_label = ctk.CTkLabel(self.conf_row, text="Confidence:", font=("Helvetica", 14, "bold"))
         self.conf_label.grid(row=0, column=0, padx=6)
 
         self.confidence_pct = ctk.CTkLabel(self.conf_row, text="0%", font=("Helvetica", 14, "bold"))
