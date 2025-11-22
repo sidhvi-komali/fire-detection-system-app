@@ -38,6 +38,6 @@ def predict(image_path):
 
     # Predict
     pred_prob = model.predict(img)[0][0]
-    label = "❄️ No Fire" if pred_prob > 0.5 else "🔥 Fire"
+    label = "❄️ No Fire" if pred_prob > 0.3 else "🔥 Fire"
 
     return f"{label} (probability: {pred_prob:.4f})"
