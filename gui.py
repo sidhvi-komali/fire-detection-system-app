@@ -21,7 +21,7 @@ ctk.set_appearance_mode("System")
 ctk.set_default_color_theme("blue")
 
 # Provide a sample path that might exist in your environment
-SAMPLE_IMAGE_PATH = "sample_image.jpg" 
+SAMPLE_IMAGE_PATH = "fire-detection-system-app/dataset/0.jpg" 
 
 # ----------------- color helpers -----------------
 def lerp_color(c1, c2, t):
