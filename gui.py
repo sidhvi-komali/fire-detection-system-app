@@ -88,13 +88,15 @@ class FireDetectionApp(ctk.CTk):
             self.result_lbl.configure(text="")
             self.confidence.set(0.0)
             prediction_text = predict_image.predict(path)
-            prob = float(prediction_text.split("probability: ")[1].replace(")", ""))
+            raw_prob = float(prediction_text.split("probability: ")[1].replace(")", ""))
+            prob = 1 - raw_prob
             label = prediction_text.split(" (")[0]
             self.after(0, lambda: self._update_result(label, prob))
         except Exception as e:
             import traceback
             tb = traceback.format_exc()
             self.after(0, lambda: self._show_error(str(e), tb))
+
 
     def _update_result(self, label, prob):
         self.loading_lbl.configure(text="")
