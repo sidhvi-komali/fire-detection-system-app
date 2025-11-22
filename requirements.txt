@@ -6,3 +6,4 @@ matplotlib
 numpy
 certifi
 tkinter
+seaborn
