@@ -59,7 +59,6 @@ cd fire-detection-system-app
 2. Install dependencies
 pip install -r requirements.txt
 
-chmod +x run.sh
+3. chmod +x run.sh
 
-./run.sh
-Tip - if the command python doesn't work use python3.
+4. ./run.sh
