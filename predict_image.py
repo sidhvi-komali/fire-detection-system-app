@@ -1,78 +1,72 @@
 import tensorflow as tf
 import numpy as np
 import os
-from tensorflow.keras.applications.efficientnet import preprocess_input # type: ignore # ⬅️ NEW/CORRECT IMPORT
+from tensorflow.keras.applications.efficientnet import preprocess_input
 
 # -----------------------------
 # Configuration
 # -----------------------------
-# The image size MUST match the input size of the EfficientNetB3 model (300, 300)
-IMAGE_SIZE = (300, 300) 
 MODEL_PATH = "models/fire_detection_model.keras"
-
-# Prediction threshold: probability above this is considered FIRE.
-# Based on the Softmax output, the probability is for the index corresponding to 'fire'.
-FIRE_THRESHOLD = 0.5 # Resetting to 0.5 for new Softmax model
+FIRE_THRESHOLD = 0.5  # Probability above this is considered FIRE
 
 # -----------------------------
-# Load model once at import time
+# Load model once
 # -----------------------------
 if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(f"Model not found at {MODEL_PATH}. Train or place model at that path.")
 
 try:
-    # Load the best model saved by ModelCheckpoint
     model = tf.keras.models.load_model(MODEL_PATH)
     print("✅ Model loaded successfully")
 except Exception as e:
-    # Handle potential loading issues (e.g., custom objects)
     print(f"Error loading model: {e}")
     raise e
 
+# Get input shape from model (ignores batch dimension)
+MODEL_INPUT_SHAPE = model.input_shape[1:3]  # (height, width)
 
 def predict(image_path):
     """
-    Loads an image, preprocesses it for EfficientNetB3, and returns a classification.
+    Loads an image, preprocesses it for the model, and returns a classification string.
+    Automatically resizes to the model's input size.
     """
-    # Use Keras utilities for reliable image loading
-    img = tf.keras.preprocessing.image.load_img(
-        image_path, 
-        target_size=IMAGE_SIZE
-    )
-    if img is None:
-        raise ValueError(f"Image not found at: {image_path}")
+    if not os.path.exists(image_path):
+        raise FileNotFoundError(f"Image not found at {image_path}")
 
-    # Convert to array and add batch dimension
+    # Load and resize image to match model input
+    img = tf.keras.preprocessing.image.load_img(image_path, target_size=MODEL_INPUT_SHAPE)
     img_array = tf.keras.preprocessing.image.img_to_array(img)
-    img_array = tf.expand_dims(img_array, 0) # Shape becomes (1, 300, 300, 3)
+    img_array = tf.expand_dims(img_array, 0)  # Add batch dimension (1, H, W, 3)
 
-    # Apply EfficientNet's specific preprocessing (scales to [-1, 1])
+    # Preprocess image for EfficientNet
     processed_img = preprocess_input(img_array)
 
-    # Predict: Output is a 2-element array [P(Fire), P(No Fire)]
-    predictions = model.predict(processed_img)
+    # Predict
+    predictions = model.predict(processed_img, verbose=0)
     probabilities = predictions[0]
 
-    # The class names list (train_ds.class_names) determines the index order:
-    # Based on your output: ['fire', 'nofire'], so Fire is index 0.
+    # Determine Fire/No Fire
+    # Assumes class index 0 = 'fire', index 1 = 'nofire'
     fire_confidence = probabilities[0]
-    
-    # Determine the label based on the Fire confidence
+    nofire_confidence = probabilities[1] if len(probabilities) > 1 else 1 - fire_confidence
+
     if fire_confidence >= FIRE_THRESHOLD:
         label = "🔥 Fire"
-        pred_prob = fire_confidence
+        prob = fire_confidence
     else:
         label = "❄️ No Fire"
-        # Display the confidence for No Fire for clarity
-        pred_prob = probabilities[1] 
-        
-    return f"{label} (probability: {pred_prob:.4f})"
+        prob = nofire_confidence
+
+    return f"{label} (probability: {prob:.4f})"
 
 
+# -----------------------------
+# Test prediction
+# -----------------------------
 if __name__ == '__main__':
-    # Simple test run (you need a test image here)
-    if os.path.exists('test.jpg'):
-        result = predict('test.jpg')
-        print(f"Prediction result for test.jpg: {result}")
+    test_image = "test.jpg"
+    if os.path.exists(test_image):
+        result = predict(test_image)
+        print(f"Prediction result for {test_image}: {result}")
     else:
-        print("Note: To test this script, place an image named 'test.jpg' in the current directory.")
+        print(f"Place a test image named '{test_image}' in the current directory to run a test.")
