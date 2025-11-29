@@ -29,7 +29,7 @@ except Exception as e:
 # -----------------------------
 def predict(image_path):
     # Predict
-    predictions = model.predict(img_array) # shape: (1, 1) or (1,)
+    predictions = model.predict(image_path) # shape: (1, 1) or (1,)
     fire_confidence = float(predictions[0][0]) # probability of fire
     nofire_confidence = 1 - fire_confidence
     
