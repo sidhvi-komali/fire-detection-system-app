@@ -1,19 +1,22 @@
-#!/bin/bash
+#!/bin/zsh
+# -----------------------------
+# Run Fire Detection GUI
+# -----------------------------
 
-echo "🚀 Launching Fire Detection System GUI..."
-
-# Navigate to the project directory
-cd "$(dirname "$0")"
-
-# Activate the virtual environment
+# 1️⃣ Activate the virtual environment
 if [ -d "venv" ]; then
-    echo "🔧 Activating virtual environment..."
     source venv/bin/activate
 else
-    echo "❌ venv not found! Run ./setup.sh first."
-    exit 1
+    echo "Virtual environment not found. Creating one..."
+    python3 -m venv venv
+    source venv/bin/activate
+    echo "Installing requirements..."
+    pip install --upgrade pip
+    pip install -r requirements.txt
 fi
 
-# Run the GUI application
-echo "📂 Running gui.py..."
+# 2️⃣ Run the GUI
 python gui.py
+
+# 3️⃣ Deactivate the virtual environment after closing
+deactivate
