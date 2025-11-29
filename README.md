@@ -51,7 +51,7 @@ App displays:
 Confidence bar ----------
 
 
-🧰 Installation
+🧰 Installation (Must be on 3.11.X because of tensorflow)
 1. Clone the project
 git clone https://github.com/sidhvi-komali/fire-detection-system-app.git
 cd fire-detection-system-app
