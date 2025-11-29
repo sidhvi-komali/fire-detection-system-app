@@ -28,35 +28,20 @@ except Exception as e:
 # Prediction function
 # -----------------------------
 def predict(image_path):
-    """
-    Predicts fire/no fire from an image using EfficientNetB3.
-    Returns string: "🔥 Fire (probability: 0.95)" or "❄️ No Fire (probability: 0.80)"
-    """
-    if not os.path.exists(image_path):
-        raise FileNotFoundError(f"Image not found: {image_path}")
-
-    # Load and resize image
-    img = tf.keras.preprocessing.image.load_img(image_path, target_size=IMAGE_SIZE)
-    img_array = tf.keras.preprocessing.image.img_to_array(img)
-    img_array = tf.expand_dims(img_array, 0)  # (1, 300, 300, 3)
-    img_array = preprocess_input(img_array)    # [-1,1] scaling
-
     # Predict
-    predictions = model.predict(img_array)  # shape: (1, 2)
-    probabilities = predictions[0]
-
-    # Assuming index 0 = fire, index 1 = no fire
-    fire_confidence = probabilities[0]
-    nofire_confidence = probabilities[1]
-
+    predictions = model.predict(img_array) # shape: (1, 1) or (1,)
+    fire_confidence = float(predictions[0][0]) # probability of fire
+    nofire_confidence = 1 - fire_confidence
+    
     if fire_confidence >= FIRE_THRESHOLD:
         label = "🔥 Fire"
         prob = fire_confidence
     else:
         label = "❄️ No Fire"
         prob = nofire_confidence
-
+    
     return f"{label} (probability: {prob:.4f})"
+
 
 # -----------------------------
 # Test run
