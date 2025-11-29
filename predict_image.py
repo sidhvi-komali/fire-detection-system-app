@@ -7,9 +7,9 @@ from tensorflow.keras.applications.efficientnet import preprocess_input
 # -----------------------------
 # Configuration
 # -----------------------------
-IMAGE_SIZE = (300, 300)  # EfficientNetB3 input
+IMAGE_SIZE = (224, 224) # Fix to match model input
 MODEL_PATH = "models/fire_detection_model.keras"
-FIRE_THRESHOLD = 0.5  # Probability above this is considered FIRE
+FIRE_THRESHOLD = 0.5
 
 # -----------------------------
 # Load model once
