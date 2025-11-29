@@ -28,9 +28,28 @@ except Exception as e:
 # Prediction function
 # -----------------------------
 def predict(image_path):
-    # Predict
-    predictions = model.predict(image_path) # shape: (1, 1) or (1,)
-    fire_confidence = float(predictions[0][0]) # probability of fire
+    """
+    Predicts fire/no fire from an image.
+    """
+    
+    if not os.path.exists(image_path):
+        raise FileNotFoundError(f"Image not found: {image_path}")
+    
+    # -------------------------
+    # Load + preprocess image
+    # -------------------------
+    img = tf.keras.preprocessing.image.load_img(image_path, target_size=IMAGE_SIZE)
+    img_array = tf.keras.preprocessing.image.img_to_array(img)
+    img_array = tf.expand_dims(img_array, 0) # (1, H, W, 3)
+    img_array = preprocess_input(img_array)
+    
+    # -------------------------
+    # Run prediction
+    # -------------------------
+    predictions = model.predict(img_array)
+    
+    # Binary model output → single probability (fire)
+    fire_confidence = float(predictions[0][0])
     nofire_confidence = 1 - fire_confidence
     
     if fire_confidence >= FIRE_THRESHOLD:
@@ -39,7 +58,7 @@ def predict(image_path):
     else:
         label = "❄️ No Fire"
         prob = nofire_confidence
-    
+
     return f"{label} (probability: {prob:.4f})"
 
 
