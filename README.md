@@ -59,10 +59,7 @@ cd fire-detection-system-app
 2. Install dependencies
 pip install -r requirements.txt
 
-3. Generate Model
-python train_model.py
+chmod +x run.sh
 
-5. Run the application
-python gui.py
-
+./run.sh
 Tip - if the command python doesn't work use python3.
