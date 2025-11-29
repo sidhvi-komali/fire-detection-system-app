@@ -54,7 +54,7 @@ def predict(image_path):
     # Binary model output → single probability (nofire)
     nofire_confidence = 1-fire_confidence
     
-    if fire_confidence <= FIRE_THRESHOLD:
+    if fire_confidence >= FIRE_THRESHOLD:
         label = "🔥 Fire"
         prob = fire_confidence
     else:
