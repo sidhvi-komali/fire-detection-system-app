@@ -1,9 +1,7 @@
-tensorflow
-tensorflow.keras
-opencv-python
-scikit-learn
-matplotlib
-numpy
+tensorflow==2.16.1
+opencv-python==4.10.0.84
+scikit-learn==1.5.1
+matplotlib==3.9.0
+numpy==1.26.4
 certifi
-tkinter
-seaborn
+seaborn==0.13.2
